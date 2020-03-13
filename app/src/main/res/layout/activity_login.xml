@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity">
 
     <TextView
-        android:id="@+id/congregator_title"
+        android:id="@+id/activity_login_congregator_title"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:autoSizeTextType="uniform"
@@ -18,28 +20,42 @@
         app:layout_constraintTop_toBottomOf="parent"
         app:layout_constraintVertical_bias="0.75" />
 
-    <Button
-        android:id="@+id/login_button"
+    <EditText
+        android:id="@+id/activity_login_email_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
+        android:layout_marginLeft="30dp"
         android:layout_marginTop="50dp"
-        android:layout_marginRight="50dp"
-        android:text="Login"
+        android:layout_marginRight="30dp"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/congregator_title" />
+        app:layout_constraintTop_toBottomOf="@id/activity_login_congregator_title" />
+
+    <EditText
+        android:id="@+id/activity_login_password_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="30dp"
+        android:hint="Password"
+        android:inputType="textPassword"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/activity_login_email_edittext" />
 
     <Button
-        android:id="@+id/signup_button"
+        android:id="@+id/activity_login_login_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="20dp"
         android:layout_marginRight="50dp"
-        android:text="Signup"
+        android:text="Log in"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login_button" />
+        app:layout_constraintTop_toBottomOf="@id/activity_login_password_edittext" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
