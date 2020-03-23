@@ -34,6 +34,7 @@
         app:layout_constraintTop_toBottomOf="@id/activity_login_congregator_title">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/activity_login_email_textinputedittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress" />
@@ -54,6 +55,7 @@
         app:layout_constraintTop_toBottomOf="@id/activity_login_email_textinputlayout">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/activity_login_password_textinputedittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword" />

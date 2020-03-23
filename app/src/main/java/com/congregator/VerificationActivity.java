@@ -41,7 +41,7 @@ public class VerificationActivity extends AppCompatActivity {
         final FirebaseUser currentUser = mAuth.getCurrentUser();
         currentUser.reload();
 
-        if(!currentUser.isEmailVerified())
+        if (!currentUser.isEmailVerified())
             Toast.makeText(VerificationActivity.this, "Email unverified", Toast.LENGTH_LONG).show();
         else {
             Intent mainActivityIntent = new Intent(VerificationActivity.this, MainActivity.class);
