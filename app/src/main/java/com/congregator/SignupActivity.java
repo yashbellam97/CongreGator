@@ -102,13 +102,13 @@ public class SignupActivity extends AppCompatActivity {
                                 new VerificationActivity().sendVerificationEmail(mAuth.getCurrentUser(), SignupActivity.this);
 
                                 // Sign in success, update UI with the signed-in user's information
-                                Toast.makeText(SignupActivity.this, "Account successfuly created", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignupActivity.this, "Account successfully created.", Toast.LENGTH_SHORT).show();
                                 Intent verificationActivityIntent = new Intent(SignupActivity.this, VerificationActivity.class);
                                 startActivity(verificationActivityIntent);
                                 finish();
                             } else {
                                 // If sign in fails, display a message to the user.
-                                Toast.makeText(SignupActivity.this, "Account creation failed", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignupActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             }
 
                         }

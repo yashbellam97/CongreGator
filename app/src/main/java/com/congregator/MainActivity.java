@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             if (!currentUser.isEmailVerified()) {
-                Toast.makeText(this, "Email not verified", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Email not verified.", Toast.LENGTH_LONG).show();
                 Intent verificationIntent = new Intent(this, VerificationActivity.class);
                 startActivity(verificationIntent);
                 finish();

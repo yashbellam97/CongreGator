@@ -42,7 +42,7 @@ public class VerificationActivity extends AppCompatActivity {
         currentUser.reload();
 
         if (!currentUser.isEmailVerified())
-            Toast.makeText(VerificationActivity.this, "Email unverified", Toast.LENGTH_LONG).show();
+            Toast.makeText(VerificationActivity.this, "Email unverified.", Toast.LENGTH_LONG).show();
         else {
             Intent mainActivityIntent = new Intent(VerificationActivity.this, MainActivity.class);
             startActivity(mainActivityIntent);
@@ -77,7 +77,7 @@ public class VerificationActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                Toast.makeText(context, "Verification email has been sent successfully", Toast.LENGTH_LONG).show();
+                                Toast.makeText(context, "Verification email has been sent.", Toast.LENGTH_LONG).show();
                             } else {
                                 Toast.makeText(context, "Sending verification email failed.", Toast.LENGTH_LONG).show();
                             }
