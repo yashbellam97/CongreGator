@@ -2,6 +2,7 @@ package com.congregator;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
             }
             // updateUI(currentUser);
         } else {
-            Intent welcomeIntent = new Intent(this, WelcomeActivity.class);
-            startActivity(welcomeIntent);
+            Intent loginIntent = new Intent(this, LoginActivity.class);
+            startActivity(loginIntent);
             finish();
         }
     }
