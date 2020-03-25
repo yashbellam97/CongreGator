@@ -6,6 +6,7 @@ import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,6 +27,8 @@ public class SignupActivity extends AppCompatActivity {
     private TextInputEditText passwordInputEditText;
     private TextInputLayout confirmPasswordTextInputLayout;
     private TextInputEditText confirmPasswordInputEditText;
+    private ProgressBar signupProgressBar;
+    private Button signupButton;
 
     private FirebaseAuth mAuth;
 
@@ -40,8 +43,9 @@ public class SignupActivity extends AppCompatActivity {
         passwordInputEditText = findViewById(R.id.activity_signup_password_textinputedittext);
         confirmPasswordTextInputLayout = findViewById(R.id.activity_signup_confirm_password_textinputlayout);
         confirmPasswordInputEditText = findViewById(R.id.activity_signup_confirm_password_textinputedittext);
+        signupProgressBar = findViewById(R.id.signup_progressbar);
 
-        Button signupButton = findViewById(R.id.activity_signup_signup_button);
+        signupButton = findViewById(R.id.activity_signup_signup_button);
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,6 +114,9 @@ public class SignupActivity extends AppCompatActivity {
 
         if (isEmailValid && isPasswordValid && isConfirmPasswordValid) {
             Utility.hideKeyboard(SignupActivity.this);
+            signupButton.setVisibility(View.INVISIBLE);
+            signupProgressBar.setVisibility(View.VISIBLE);
+
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -123,6 +130,8 @@ public class SignupActivity extends AppCompatActivity {
                                 startActivity(verificationActivityIntent);
                                 finish();
                             } else {
+                                signupProgressBar.setVisibility(View.INVISIBLE);
+                                signupButton.setVisibility(View.VISIBLE);
                                 // If sign in fails, display a message to the user.
                                 Toast.makeText(SignupActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             }

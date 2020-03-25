@@ -6,6 +6,7 @@ import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,6 +26,8 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputEditText emailInputEditText;
     private TextInputLayout passwordTextInputLayout;
     private TextInputEditText passwordInputEditText;
+    private ProgressBar loginProgressBar;
+    private Button loginButton;
 
     private FirebaseAuth mAuth;
 
@@ -39,8 +42,9 @@ public class LoginActivity extends AppCompatActivity {
         emailInputEditText = findViewById(R.id.activity_login_email_textinputedittext);
         passwordTextInputLayout = findViewById(R.id.activity_login_password_textinputlayout);
         passwordInputEditText = findViewById(R.id.activity_login_password_textinputedittext);
+        loginProgressBar = findViewById(R.id.login_progressbar);
 
-        Button loginButton = findViewById(R.id.activity_login_login_button);
+        loginButton = findViewById(R.id.activity_login_login_button);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,6 +96,8 @@ public class LoginActivity extends AppCompatActivity {
 
         if (isEmailValid && isPasswordValid) {
             Utility.hideKeyboard(LoginActivity.this);
+            loginButton.setVisibility(View.INVISIBLE);
+            loginProgressBar.setVisibility(View.VISIBLE);
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -102,6 +108,8 @@ public class LoginActivity extends AppCompatActivity {
                                 startActivity(mainActivityIntent);
                                 finish();
                             } else {
+                                loginProgressBar.setVisibility(View.INVISIBLE);
+                                loginButton.setVisibility(View.VISIBLE);
                                 Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                             }
                         }
