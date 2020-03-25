@@ -1,13 +1,11 @@
 package com.congregator;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,17 +28,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
-    public static void hideKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        //Find the currently focused view, so we can grab the correct window token from it.
-        View view = activity.getCurrentFocus();
-        //If no view currently has focus, create a new one, just so we can grab a window token from it
-        if (view == null) {
-            view = new View(activity);
-        }
-        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,9 +44,17 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                hideKeyboard(LoginActivity.this);
-                String email = emailInputEditText.getText().toString();
-                String password = passwordInputEditText.getText().toString();
+                Editable emailEditable = emailInputEditText.getText();
+                String email = null;
+                if (emailEditable != null) {
+                    email = emailEditable.toString();
+                }
+
+                Editable passwordEditable = passwordInputEditText.getText();
+                String password = null;
+                if (passwordEditable != null) {
+                    password = passwordEditable.toString();
+                }
 
                 signIn(email, password);
             }
@@ -69,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
         signupLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Utility.hideKeyboard(LoginActivity.this);
                 Intent signupActivityIntent = new Intent(view.getContext(), SignupActivity.class);
                 startActivity(signupActivityIntent);
                 finish();
@@ -80,21 +76,22 @@ public class LoginActivity extends AppCompatActivity {
         boolean isEmailValid = false;
         boolean isPasswordValid = false;
 
-        if (email.isEmpty()) {
-            emailTextInputLayout.setError("required");
+        if (!Utility.isValidEmail(email)) {
+            emailTextInputLayout.setError("Please enter a valid email address");
         } else {
             emailTextInputLayout.setError(null);
             isEmailValid = true;
         }
 
         if (password.isEmpty()) {
-            passwordTextInputLayout.setError("required");
+            passwordTextInputLayout.setError("Required");
         } else {
             passwordTextInputLayout.setError(null);
             isPasswordValid = true;
         }
 
         if (isEmailValid && isPasswordValid) {
+            Utility.hideKeyboard(LoginActivity.this);
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override

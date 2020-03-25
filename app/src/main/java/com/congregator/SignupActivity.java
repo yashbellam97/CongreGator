@@ -1,11 +1,9 @@
 package com.congregator;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.Editable;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -31,17 +29,6 @@ public class SignupActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
-    public static void hideKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        //Find the currently focused view, so we can grab the correct window token from it.
-        View view = activity.getCurrentFocus();
-        //If no view currently has focus, create a new one, just so we can grab a window token from it
-        if (view == null) {
-            view = new View(activity);
-        }
-        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,10 +45,23 @@ public class SignupActivity extends AppCompatActivity {
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                hideKeyboard(SignupActivity.this);
-                String email = emailInputEditText.getText().toString();
-                String password = passwordInputEditText.getText().toString();
-                String confirmPassword = confirmPasswordInputEditText.getText().toString();
+                Editable emailEditable = emailInputEditText.getText();
+                String email = null;
+                if (emailEditable != null) {
+                    email = emailEditable.toString();
+                }
+
+                Editable passwordEditable = passwordInputEditText.getText();
+                String password = null;
+                if (passwordEditable != null) {
+                    password = passwordEditable.toString();
+                }
+
+                Editable confirmPasswordEditable = confirmPasswordInputEditText.getText();
+                String confirmPassword = null;
+                if (confirmPasswordEditable != null) {
+                    confirmPassword = confirmPasswordEditable.toString();
+                }
 
                 createAccount(email, password, confirmPassword);
             }
@@ -71,6 +71,7 @@ public class SignupActivity extends AppCompatActivity {
         loginLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Utility.hideKeyboard(SignupActivity.this);
                 Intent loginActivityIntent = new Intent(view.getContext(), LoginActivity.class);
                 startActivity(loginActivityIntent);
                 finish();
@@ -86,26 +87,29 @@ public class SignupActivity extends AppCompatActivity {
         boolean isPasswordValid = false;
         boolean isConfirmPasswordValid = false;
 
-        if (!email.endsWith("@ufl.edu")) {
-            emailTextInputLayout.setError("must end with @ufl.edu");
+        if (!Utility.isValidEmail(email) || !email.endsWith("@ufl.edu")) {
+            emailTextInputLayout.setError("Please enter a valid @ufl.edu email address");
         } else {
             emailTextInputLayout.setError(null);
             isEmailValid = true;
         }
-        if (password.length() < 8) {
-            passwordTextInputLayout.setError("must be at least 8 characters long");
+
+        if (password.isEmpty() || password.length() < 8) {
+            passwordTextInputLayout.setError("Password must be at least 8 characters long");
         } else {
             passwordTextInputLayout.setError(null);
             isPasswordValid = true;
         }
-        if (!password.equals(confirmPassword)) {
-            confirmPasswordTextInputLayout.setError("passwords must match");
+
+        if (!confirmPassword.equals(password)) {
+            confirmPasswordTextInputLayout.setError("Passwords must match");
         } else {
             confirmPasswordTextInputLayout.setError(null);
             isConfirmPasswordValid = true;
         }
 
         if (isEmailValid && isPasswordValid && isConfirmPasswordValid) {
+            Utility.hideKeyboard(SignupActivity.this);
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -114,7 +118,7 @@ public class SignupActivity extends AppCompatActivity {
                                 new VerificationActivity().sendVerificationEmail(mAuth.getCurrentUser(), SignupActivity.this);
 
                                 // Sign in success, update UI with the signed-in user's information
-                                Toast.makeText(SignupActivity.this, "Account successfully created.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignupActivity.this, "Account successfully created", Toast.LENGTH_SHORT).show();
                                 Intent verificationActivityIntent = new Intent(SignupActivity.this, VerificationActivity.class);
                                 startActivity(verificationActivityIntent);
                                 finish();
@@ -122,7 +126,6 @@ public class SignupActivity extends AppCompatActivity {
                                 // If sign in fails, display a message to the user.
                                 Toast.makeText(SignupActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             }
-
                         }
                     });
         }
