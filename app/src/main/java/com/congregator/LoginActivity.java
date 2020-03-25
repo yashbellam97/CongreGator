@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -60,6 +62,16 @@ public class LoginActivity extends AppCompatActivity {
                 String password = passwordInputEditText.getText().toString();
 
                 signIn(email, password);
+            }
+        });
+
+        LinearLayout signupLayout = findViewById(R.id.activity_login_signup_linearlayout);
+        signupLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent signupActivityIntent = new Intent(view.getContext(), SignupActivity.class);
+                startActivity(signupActivityIntent);
+                finish();
             }
         });
     }

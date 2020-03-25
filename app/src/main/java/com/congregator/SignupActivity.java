@@ -3,9 +3,11 @@ package com.congregator;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -62,6 +64,16 @@ public class SignupActivity extends AppCompatActivity {
                 String confirmPassword = confirmPasswordInputEditText.getText().toString();
 
                 createAccount(email, password, confirmPassword);
+            }
+        });
+
+        LinearLayout loginLayout = findViewById(R.id.activity_signup_login_linearlayout);
+        loginLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent loginActivityIntent = new Intent(view.getContext(), LoginActivity.class);
+                startActivity(loginActivityIntent);
+                finish();
             }
         });
 
