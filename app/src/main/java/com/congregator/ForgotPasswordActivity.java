@@ -57,8 +57,8 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     private void userExists(final String email) {
         boolean isEmailValid = false;
 
-        if (!Utility.isValidEmail(email)) {
-            emailTextInputLayout.setError("Please enter a valid email address");
+        if (Utility.isEmailInvalid(email)) {
+            emailTextInputLayout.setError(getText(R.string.invalid_email_error_message));
         } else {
             emailTextInputLayout.setError(null);
             isEmailValid = true;
@@ -83,7 +83,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                                 } else {
                                     forgotPasswordProgressBar.setVisibility(View.INVISIBLE);
                                     sendEmailButton.setVisibility(View.VISIBLE);
-                                    Toast.makeText(ForgotPasswordActivity.this, "Error: The email you entered doesn't match any account", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(ForgotPasswordActivity.this, R.string.no_account_with_email_error_message, Toast.LENGTH_LONG).show();
                                 }
                             }
                         }
@@ -97,7 +97,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(ForgotPasswordActivity.this, "Password reset email sent", Toast.LENGTH_LONG).show();
+                            Toast.makeText(ForgotPasswordActivity.this, R.string.password_reset_email_sent_text, Toast.LENGTH_LONG).show();
                             finish();
                         }
                     }

@@ -53,7 +53,7 @@ public class VerificationActivity extends AppCompatActivity {
         if (currentUser != null) {
             userEmail = currentUser.getEmail();
         }
-        String statusText = "An email has been sent to " + userEmail + ". Please verify by clicking on the link.";
+        String statusText = getString(R.string.verification_email_sent_to_address_message, userEmail);
         verificationStatusTextview.setText(statusText);
 
         resendVerificationEmailButton.setOnClickListener(new View.OnClickListener() {
@@ -77,9 +77,9 @@ public class VerificationActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                Toast.makeText(context, "Verification email has been sent.", Toast.LENGTH_LONG).show();
+                                Toast.makeText(context, R.string.verification_email_sent_message, Toast.LENGTH_LONG).show();
                             } else {
-                                Toast.makeText(context, "Sending verification email failed.", Toast.LENGTH_LONG).show();
+                                Toast.makeText(context, R.string.verification_email_sending_failed_message, Toast.LENGTH_LONG).show();
                             }
                         }
                     });

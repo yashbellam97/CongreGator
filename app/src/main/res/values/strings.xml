@@ -1,3 +1,48 @@
 <resources>
     <string name="app_name">CongreGator</string>
+
+    <string name="app_logo_content_description">Logo of the app</string>
+
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="confirm_password_hint">Confirm password</string>
+
+    <string name="login_button_text">Log in</string>
+    <string name="signup_button_text">Sign up</string>
+    <string name="password_reset_button_text">Send password reset email</string>
+    <string name="resend_verification_button_text">Resend verification email</string>
+
+    <string name="forgot_password_text">Forgot password?</string>
+    <string name="no_account_text">No account yet?\u0020</string>
+    <string name="have_account_text">Have an account?\u0020</string>
+
+    <string name="signup_text">Sign up</string>
+    <string name="login_text">Log in</string>
+
+    <string name="account_creation_success_message">"Account successfully created"</string>
+    <string name="password_reset_email_sent_text">"Password reset email sent"</string>
+
+    <string name="ufl_email_domain">"@ufl.edu"</string>
+
+    <string name="invalid_email_error_message">"Please enter a valid email address"</string>
+    <string name="required_error_message">"Required"</string>
+    <string name="not_ufl_email_error_message">"Please enter a valid @ufl.edu email address"</string>
+    <string name="password_minimum_length_error_message">"Password must be at least 8 characters long"</string>
+    <string name="password_confirm_password_mismatch_error_message">"Passwords must match"</string>
+
+
+    <string name="password_too_weak_error_message">"Error: Your password is too weak"</string>
+    <string name="malformed_email_error_message">"Error: There's a problem with your email address. Please check and try again"</string>
+    <string name="email_already_exists_error_message">"Error: This email address is already in use"</string>
+    <string name="signup_error_message">"Account creation failed: Some error occurred"</string>
+
+    <string name="no_account_with_email_error_message">"Error: The email you entered doesn't match any account"</string>
+    <string name="password_incorrect_error_message">"Error: The password you entered is incorrect"</string>
+    <string name="login_error_message">"Login failed: Some error occurred"</string>
+
+    <string name="verification_email_sent_to_address_message">"An email has been sent to %1$s. Please verify by clicking on the link."</string>
+    <string name="verification_email_sent_message">"Verification email has been sent"</string>
+    <string name="verification_email_sending_failed_message">"Sending verification email failed"</string>
+
+
 </resources>

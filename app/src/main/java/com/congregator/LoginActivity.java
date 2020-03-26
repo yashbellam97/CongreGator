@@ -18,8 +18,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.google.firebase.auth.FirebaseAuthUserCollisionException;
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 
 import androidx.annotation.NonNull;
@@ -97,15 +95,15 @@ public class LoginActivity extends AppCompatActivity {
         boolean isEmailValid = false;
         boolean isPasswordValid = false;
 
-        if (!Utility.isValidEmail(email)) {
-            emailTextInputLayout.setError("Please enter a valid email address");
+        if (Utility.isEmailInvalid(email)) {
+            emailTextInputLayout.setError(getText(R.string.invalid_email_error_message));
         } else {
             emailTextInputLayout.setError(null);
             isEmailValid = true;
         }
 
         if (password.isEmpty()) {
-            passwordTextInputLayout.setError("Required");
+            passwordTextInputLayout.setError(getText(R.string.required_error_message));
         } else {
             passwordTextInputLayout.setError(null);
             isPasswordValid = true;
@@ -132,11 +130,11 @@ public class LoginActivity extends AppCompatActivity {
                                 try {
                                     throw task.getException();
                                 } catch (FirebaseAuthInvalidUserException invalidUserException) {
-                                    Toast.makeText(LoginActivity.this, "Error: The email you entered doesn't match any account", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(LoginActivity.this, R.string.no_account_with_email_error_message, Toast.LENGTH_LONG).show();
                                 } catch (FirebaseAuthInvalidCredentialsException invalidCredentialsException) {
-                                    Toast.makeText(LoginActivity.this, "Error: The password you entered is incorrect", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(LoginActivity.this, R.string.password_incorrect_error_message, Toast.LENGTH_LONG).show();
                                 } catch (Exception e) {
-                                    Toast.makeText(LoginActivity.this, "Login failed: Some error occurred", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(LoginActivity.this, R.string.login_error_message, Toast.LENGTH_LONG).show();
                                 }
                             }
                         }

@@ -94,22 +94,22 @@ public class SignupActivity extends AppCompatActivity {
         boolean isPasswordValid = false;
         boolean isConfirmPasswordValid = false;
 
-        if (!Utility.isValidEmail(email) || !email.endsWith("@ufl.edu")) {
-            emailTextInputLayout.setError("Please enter a valid @ufl.edu email address");
+        if (Utility.isEmailInvalid(email) || !email.endsWith(getString(R.string.ufl_email_domain))) {
+            emailTextInputLayout.setError(getText(R.string.not_ufl_email_error_message));
         } else {
             emailTextInputLayout.setError(null);
             isEmailValid = true;
         }
 
         if (password.isEmpty() || password.length() < 8) {
-            passwordTextInputLayout.setError("Password must be at least 8 characters long");
+            passwordTextInputLayout.setError(getText(R.string.password_minimum_length_error_message));
         } else {
             passwordTextInputLayout.setError(null);
             isPasswordValid = true;
         }
 
         if (!confirmPassword.equals(password)) {
-            confirmPasswordTextInputLayout.setError("Passwords must match");
+            confirmPasswordTextInputLayout.setError(getText(R.string.password_confirm_password_mismatch_error_message));
         } else {
             confirmPasswordTextInputLayout.setError(null);
             isConfirmPasswordValid = true;
@@ -128,7 +128,7 @@ public class SignupActivity extends AppCompatActivity {
                                 new VerificationActivity().sendVerificationEmail(mAuth.getCurrentUser(), SignupActivity.this);
 
                                 // Sign in success, update UI with the signed-in user's information
-                                Toast.makeText(SignupActivity.this, "Account successfully created", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignupActivity.this, R.string.account_creation_success_message, Toast.LENGTH_SHORT).show();
                                 Intent verificationActivityIntent = new Intent(SignupActivity.this, VerificationActivity.class);
                                 startActivity(verificationActivityIntent);
                                 finish();
@@ -140,13 +140,13 @@ public class SignupActivity extends AppCompatActivity {
                                 try {
                                     throw task.getException();
                                 } catch (FirebaseAuthWeakPasswordException weakPasswordException) {
-                                    Toast.makeText(SignupActivity.this, "Error: Your password is too weak", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(SignupActivity.this, R.string.password_too_weak_error_message, Toast.LENGTH_LONG).show();
                                 } catch (FirebaseAuthInvalidCredentialsException invalidCredentialsException) {
-                                    Toast.makeText(SignupActivity.this, "Error: There's a problem with your email address. Please check and try again", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(SignupActivity.this, R.string.malformed_email_error_message, Toast.LENGTH_LONG).show();
                                 } catch (FirebaseAuthUserCollisionException userCollisionException) {
-                                    Toast.makeText(SignupActivity.this, "Error: This email address is already in use", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(SignupActivity.this, R.string.email_already_exists_error_message, Toast.LENGTH_LONG).show();
                                 } catch (Exception e) {
-                                    Toast.makeText(SignupActivity.this, "Account creation failed: Some error occurred", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(SignupActivity.this, R.string.signup_error_message, Toast.LENGTH_LONG).show();
                                 }
                             }
                         }

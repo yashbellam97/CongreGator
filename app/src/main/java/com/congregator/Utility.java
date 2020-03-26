@@ -16,11 +16,11 @@ class Utility {
         if (view == null) {
             view = new View(activity);
         }
-        if(inputMethodManager != null)
+        if (inputMethodManager != null)
             inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    static boolean isValidEmail(String email) {
-        return (!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches());
+    static boolean isEmailInvalid(String email) {
+        return (TextUtils.isEmpty(email) || !Patterns.EMAIL_ADDRESS.matcher(email).matches());
     }
 }
