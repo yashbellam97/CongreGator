@@ -44,9 +44,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:hint="Password"
+        app:errorIconDrawable="@null"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/activity_signup_email_textinputlayout">
+        app:layout_constraintTop_toBottomOf="@id/activity_signup_email_textinputlayout"
+        app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/activity_signup_password_textinputedittext"
@@ -63,9 +65,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:hint="Confirm password"
+        app:errorIconDrawable="@null"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/activity_signup_password_textinputlayout">
+        app:layout_constraintTop_toBottomOf="@id/activity_signup_password_textinputlayout"
+        app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/activity_signup_confirm_password_textinputedittext"
