@@ -18,6 +18,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
 
@@ -32,6 +33,9 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
+
+        Toolbar forgotPasswordToolbar = findViewById(R.id.forgot_password_app_bar);
+        setSupportActionBar(forgotPasswordToolbar);
 
         mAuth = FirebaseAuth.getInstance();
 

@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -39,6 +40,9 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+
+        Toolbar signupToolbar = findViewById(R.id.activity_signup_app_bar);
+        setSupportActionBar(signupToolbar);
 
         emailTextInputLayout = findViewById(R.id.activity_signup_email_textinputlayout);
         emailInputEditText = findViewById(R.id.activity_signup_email_textinputedittext);

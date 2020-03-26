@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 public class VerificationActivity extends AppCompatActivity {
 
@@ -26,6 +27,9 @@ public class VerificationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verification);
+
+        Toolbar verificationToolbar = findViewById(R.id.activity_verification_app_bar);
+        setSupportActionBar(verificationToolbar);
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
