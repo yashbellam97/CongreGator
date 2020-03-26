@@ -15,6 +15,9 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -132,8 +135,19 @@ public class SignupActivity extends AppCompatActivity {
                             } else {
                                 signupProgressBar.setVisibility(View.INVISIBLE);
                                 signupButton.setVisibility(View.VISIBLE);
+
                                 // If sign in fails, display a message to the user.
-                                Toast.makeText(SignupActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                try {
+                                    throw task.getException();
+                                } catch (FirebaseAuthWeakPasswordException weakPasswordException) {
+                                    Toast.makeText(SignupActivity.this, "Error: Your password is too weak", Toast.LENGTH_LONG).show();
+                                } catch (FirebaseAuthInvalidCredentialsException invalidCredentialsException) {
+                                    Toast.makeText(SignupActivity.this, "Error: There's a problem with your email address. Please check and try again", Toast.LENGTH_LONG).show();
+                                } catch (FirebaseAuthUserCollisionException userCollisionException) {
+                                    Toast.makeText(SignupActivity.this, "Error: This email address is already in use", Toast.LENGTH_LONG).show();
+                                } catch (Exception e) {
+                                    Toast.makeText(SignupActivity.this, "Account creation failed: Some error occurred", Toast.LENGTH_LONG).show();
+                                }
                             }
                         }
                     });

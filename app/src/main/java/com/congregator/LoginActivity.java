@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -15,6 +16,10 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 
 import androidx.annotation.NonNull;
@@ -74,6 +79,18 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        TextView forgotPasswordTextView = findViewById(R.id.activity_login_forgot_password_textview);
+        forgotPasswordTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utility.hideKeyboard(LoginActivity.this);
+                startActivity(getIntent());
+                finish();
+                Intent forgotPasswordIntent = new Intent(view.getContext(), ForgotPasswordActivity.class);
+                startActivity(forgotPasswordIntent);
+            }
+        });
     }
 
     private void signIn(String email, String password) {
@@ -98,6 +115,7 @@ public class LoginActivity extends AppCompatActivity {
             Utility.hideKeyboard(LoginActivity.this);
             loginButton.setVisibility(View.INVISIBLE);
             loginProgressBar.setVisibility(View.VISIBLE);
+
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -110,7 +128,16 @@ public class LoginActivity extends AppCompatActivity {
                             } else {
                                 loginProgressBar.setVisibility(View.INVISIBLE);
                                 loginButton.setVisibility(View.VISIBLE);
-                                Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+
+                                try {
+                                    throw task.getException();
+                                } catch (FirebaseAuthInvalidUserException invalidUserException) {
+                                    Toast.makeText(LoginActivity.this, "Error: The email you entered doesn't match any account", Toast.LENGTH_LONG).show();
+                                } catch (FirebaseAuthInvalidCredentialsException invalidCredentialsException) {
+                                    Toast.makeText(LoginActivity.this, "Error: The password you entered is incorrect", Toast.LENGTH_LONG).show();
+                                } catch (Exception e) {
+                                    Toast.makeText(LoginActivity.this, "Login failed: Some error occurred", Toast.LENGTH_LONG).show();
+                                }
                             }
                         }
                     });
